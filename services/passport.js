@@ -5,7 +5,7 @@ const keys = require("../config/keys");
 require("../models/User");
 
 const User = mongoose.model("User");
-
+console.log("line 8 passport.js");
 passport.serializeUser((user, done) => {
   //first argument below is error, we don't except error here
   //so it's null
@@ -24,6 +24,7 @@ passport.deserializeUser((id, done) => {
     });
 });
 
+console.log("googleClientID : " + keys.googleClientID);
 //tell passport to use below google clientId,clientSecret,
 // and callbackURl
 passport.use(
@@ -31,10 +32,14 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback"
+      callbackURL: "/auth/google/callback",
+      proxy: true,
+      scope: "https://www.googleapis.com/auth/plus.login"
     },
     (accessToken, refreshToken, profile, done) => {
-      // console.log(profile.id);
+      // console.log("accessToken", accessToken);
+      // console.log("refreshToken", refreshToken);
+      // console.log("profile", profile);
 
       //find if this user exist, if yes don't save
       User.findOne({ googleId: profile.id })

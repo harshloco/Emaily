@@ -1,8 +1,12 @@
-module.exports = {
-  googleClientID:
-    "481307666580-9tciv6p0thclm37es57srl56sj1v0uar.apps.googleusercontent.com",
-  googleClientSecret: "Td6QDZdNXy_isYQ8oe4HUmb_",
-  mongoURI:
-    "mongodb+srv://react_emaily-dev:Redfern_2789@cluster0-jhavc.mongodb.net/test?retryWrites=true&w=majority",
-  cookieKey: "adfhk$4dfkdfv*792r"
-};
+//keys.js fogure out what sets of credentials to return
+
+if (process.env.NODE_ENV === "production") {
+  //we are in prod - return prod keys
+  console.log("line 5 keys.js process.env.NODE_ENV :" + process.env.NODE_ENV);
+
+  module.exports = require("./prod");
+} else {
+  //we are in dev - return dev keys
+
+  module.exports = require("./dev");
+}
